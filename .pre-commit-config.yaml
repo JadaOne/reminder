@@ -1,0 +1,28 @@
+repos:
+  # python import sorting - will amend files
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.2.0
+    hooks:
+    - id: isort
+      language_version: python3.8.6
+
+  # python code formatting - will amend files
+  - repo: https://github.com/psf/black
+    rev: 19.10b0
+    hooks:
+    - id: black
+      language_version: python3.8.6
+
+  # Flake8 includes pyflakes, pycodestyle, mccabe, pydocstyle, bandit
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.3
+    hooks:
+    - id: flake8
+      language_version: python3.8.6
+
+  # PEP8 linting, with added Django goodness
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v2.5.3
+    hooks:
+      - id: pylint
+        language_version: python3.8.6
