@@ -1,10 +1,11 @@
-from rest_framework import generics
-from ..serializers import UserSchema
-from rest_framework.views import APIView
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.views import APIView
+
 from reminder.apps.core.services import update_object
+
+from ..serializers import UserSchema
 
 
 class UserView(APIView):
@@ -17,7 +18,9 @@ class UserView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, only=("first_name", "last_name"))
+        serializer = self.serializer_class(
+            data=request.data, only=("first_name", "last_name")
+        )
         serializer.is_valid(raise_exception=True)
         user = update_object(request.user, **serializer.validated_data)
         return Response(self.serializer_class(user).data, status=status.HTTP_200_OK)

@@ -1,9 +1,4 @@
 from .event import EventSchema
-from .partisipant import PartisipantSchems, CreateParticipantSchema
+from .partisipant import CreateParticipantSchema, ParticipantSchema
 
-
-__all__ = [
-    "EventSchema",
-    "CreateParticipantSchema",
-    "PartisipantSchems"
-]
+__all__ = ["EventSchema", "CreateParticipantSchema", "ParticipantSchema"]

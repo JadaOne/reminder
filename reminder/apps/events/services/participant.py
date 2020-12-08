@@ -1,5 +1,9 @@
-from ..models import UserRole, EventStatus
-from ..exceptions import PermissionDeniedException, EventIsNotOpenedException, CreatorCanNotBeRemovedException
+from ..exceptions import (
+    CreatorCanNotBeRemovedException,
+    EventIsNotOpenedException,
+    PermissionDeniedException,
+)
+from ..models import EventStatus, UserRole
 
 
 def process_participant_deletion(event, participant, user):

@@ -1,5 +1,3 @@
-
-
 class UserWithProvidedEmailAlreadyExistsException(BaseException):
     pass
 

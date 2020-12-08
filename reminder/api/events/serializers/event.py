@@ -1,8 +1,10 @@
-from rest_marshmallow import fields
-from reminder.api.core.serializers import PublicBaseSchema
 from marshmallow import validate
+from rest_marshmallow import fields
+
+from reminder.api.core.serializers import PublicBaseSchema
+
+from .partisipant import ParticipantSchema
 from .validators import FutureDateValidator
-from .partisipant import PartisipantSchems
 
 
 class EventSchema(PublicBaseSchema):
@@ -15,4 +17,4 @@ class EventSchema(PublicBaseSchema):
     participants = fields.Method("get_participants")
 
     def get_participants(self, obj):
-        return PartisipantSchems(obj.participants.all(), many=True).data
+        return ParticipantSchema(obj.participants.all(), many=True).data

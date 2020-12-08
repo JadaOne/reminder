@@ -1,5 +1,8 @@
+from ..exceptions import (
+    UnregisteredUsersCanNotBeAddedExceptions,
+    UserWithProvidedEmailAlreadyExistsException,
+)
 from ..models import User
-from ..exceptions import UserWithProvidedEmailAlreadyExistsException, UnregisteredUsersCanNotBeAddedExceptions
 
 
 def register_user(email, first_name, last_name, password, **kwargs):

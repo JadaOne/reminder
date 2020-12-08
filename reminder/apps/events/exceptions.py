@@ -1,5 +1,3 @@
-
-
 class EventIsNotOpenedException(BaseException):
     pass
 

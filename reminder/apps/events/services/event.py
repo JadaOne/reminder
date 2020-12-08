@@ -1,8 +1,12 @@
-from ..models import Event, EventStatus, Participant, UserRole
-from ..exceptions import EventIsNotOpenedException, PermissionDeniedException, ParticipantAlreadyRegisteredException
 from reminder.apps.core.services import update_object
 from reminder.apps.users.services import collect_and_check_users
-from ..models import UserRole, Participant
+
+from ..exceptions import (
+    EventIsNotOpenedException,
+    ParticipantAlreadyRegisteredException,
+    PermissionDeniedException,
+)
+from ..models import Event, EventStatus, Participant, UserRole
 
 
 def create_event(user, **kwargs):
@@ -40,17 +44,20 @@ def add_participants(event, users_list):
 
     if event.status != EventStatus.OPEN:
         raise EventIsNotOpenedException
-    
-    if Participant.objects.filter(event=event, user_id__in=[user.id for user in users_list]):
+
+    if Participant.objects.filter(
+        event=event, user_id__in=[user.id for user in users_list]
+    ):
         raise ParticipantAlreadyRegisteredException
-    
+
     Participant.objects.bulk_create(
         [
-            Participant(event=event, user=participant, role=UserRole.INVITEE) for participant in users_list
+            Participant(event=event, user=participant, role=UserRole.INVITEE)
+            for participant in users_list
         ]
     )
-    
-    
+
+
 def process_participants_adding(user, event, email_list):
 
     if user.participations.get(event=event).role != UserRole.CREATOR:

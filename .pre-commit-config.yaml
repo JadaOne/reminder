@@ -1,10 +1,4 @@
 repos:
-  # python import sorting - will amend files
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.2.0
-    hooks:
-    - id: isort
-      language_version: python3.8.6
 
   # python code formatting - will amend files
   - repo: https://github.com/psf/black

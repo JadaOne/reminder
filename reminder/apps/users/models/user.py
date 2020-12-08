@@ -1,10 +1,12 @@
-from reminder.apps.core.models import AbstractPublicModel, IsActiveModelMixin
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.db import models
-from django.utils.translation import gettext_lazy as _lazy
-from django.utils import timezone
-from ..utils import validate_email
 from django.contrib.auth.models import UserManager
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _lazy
+
+from reminder.apps.core.models import AbstractPublicModel, IsActiveModelMixin
+
+from ..utils import validate_email
 
 
 class User(AbstractPublicModel, IsActiveModelMixin, AbstractBaseUser):
@@ -19,11 +21,11 @@ class User(AbstractPublicModel, IsActiveModelMixin, AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"
 
     def __repr__(self):
         return f"<User id={self.id}, is_active={self.is_active}>"

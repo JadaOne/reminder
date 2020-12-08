@@ -2,7 +2,6 @@ from rest_framework import filters
 
 
 class EventFilterBackend(filters.BaseFilterBackend):
-
     def filter_queryset(self, request, queryset, view):
 
         status = request.query_params.get("status")
