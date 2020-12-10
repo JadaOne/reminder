@@ -2,7 +2,7 @@ from reminder.apps.core.services import update_object
 from reminder.apps.users.services import collect_and_check_users
 
 from ..exceptions import (
-    EventIsNotOpenedException,
+    EventIsNotActiveException,
     ParticipantAlreadyRegisteredException,
     PermissionDeniedException,
 )
@@ -21,8 +21,8 @@ def complete_event(event, user):
     if user.participations.get(event=event).role != UserRole.CREATOR:
         raise PermissionDeniedException
 
-    if event.status != EventStatus.OPEN:
-        raise EventIsNotOpenedException
+    if event.status not in [EventStatus.OPEN, EventStatus.PROCESSED]:
+        raise EventIsNotActiveException
 
     event.status = EventStatus.COMPLETE
     event.save()
@@ -34,16 +34,16 @@ def update_event(event, user, **kwargs):
     if user.participations.get(event=event).role != UserRole.CREATOR:
         raise PermissionDeniedException
 
-    if event.status != EventStatus.OPEN:
-        raise EventIsNotOpenedException
+    if event.status not in [EventStatus.OPEN, EventStatus.PROCESSED]:
+        raise EventIsNotActiveException
 
     return update_object(event, **kwargs)
 
 
 def add_participants(event, users_list):
 
-    if event.status != EventStatus.OPEN:
-        raise EventIsNotOpenedException
+    if event.status not in [EventStatus.OPEN, EventStatus.PROCESSED]:
+        raise EventIsNotActiveException
 
     if Participant.objects.filter(
         event=event, user_id__in=[user.id for user in users_list]

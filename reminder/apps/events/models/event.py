@@ -12,6 +12,9 @@ class EventStatus(models.TextChoices):
     OPEN = "OPEN", _lazy("Open")
     COMPLETE = "COMPLETE", _lazy("Complete")
     CLOSED = "CLOSED", _lazy("Closed")
+    PROCESSING = "PROCESSING", _lazy("Processing")
+    NOTIFICATION_FAILED = "NOTIFICATION_FAILED", _lazy("Notification failed")
+    PROCESSED = "PROCESSED", _lazy("Processed")
 
 
 class Event(AbstractPublicModel, IsActiveModelMixin):

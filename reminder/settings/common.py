@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 
 from ._shared import *  # noqa
+from env_utils import get_bool, get_env, get_int  # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "django_rq",
+    "django_apscheduler",
     "reminder.apps.core",
     "reminder.apps.users",
     "reminder.apps.events",
@@ -112,3 +115,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+
+FROM_MAIL = get_env("FROM_MAIL", "test@test.test")

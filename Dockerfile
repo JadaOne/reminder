@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
     git \
     # for psycopg2 library
     libpq-dev \
+    # for emails
+    postfix \
     && apt-get clean
 
 COPY requirements/ /app/requirements/

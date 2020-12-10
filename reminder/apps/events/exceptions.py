@@ -1,4 +1,4 @@
-class EventIsNotOpenedException(BaseException):
+class EventIsNotActiveException(BaseException):
     pass
 
 

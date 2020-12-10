@@ -12,8 +12,7 @@ services:
     volumes:
       - ./docker/postgres:/data
 
-#    django: &reminder_container
-  django:
+  django: &reminder_container
     build: .
     container_name: reminder-app-dev
     ports:
@@ -24,9 +23,15 @@ services:
       - ./.env
     depends_on:
       - postgres
+      - redis
 
-#    worker:
-#      <<: *reminder_container
-#      ports: []
-#      command: python manage.py rqworker $WORKER_QUEUES
-#      container_name: reminder-worker-dev
+  redis:
+    image: redis:6.0.8
+    ports:
+      - "6379:6379"
+
+  worker:
+    <<: *reminder_container
+    ports: []
+    command: python manage.py rqworker default
+    container_name: reminder-worker-dev

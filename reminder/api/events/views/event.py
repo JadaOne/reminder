@@ -10,7 +10,7 @@ from rest_framework.viewsets import GenericViewSet
 from reminder.apps.core.utils import validate_UUID
 from reminder.apps.events.exceptions import (
     CreatorCanNotBeRemovedException,
-    EventIsNotOpenedException,
+    EventIsNotActiveException,
     ParticipantAlreadyRegisteredException,
     PermissionDeniedException,
 )
@@ -51,7 +51,7 @@ class EventView(GenericViewSet, generics.RetrieveAPIView, generics.ListAPIView):
         event = self.get_object()
         try:
             event = complete_event(event, request.user)
-        except EventIsNotOpenedException:
+        except EventIsNotActiveException:
             raise APIException(
                 _lazy("You can not cancel already complete or closed event")
             )
@@ -70,7 +70,7 @@ class EventView(GenericViewSet, generics.RetrieveAPIView, generics.ListAPIView):
             event = update_event(event, request.user, **serializer.validated_data)
         except PermissionDeniedException:
             raise APIException(_lazy("You have to be a creator to update the event"))
-        except EventIsNotOpenedException:
+        except EventIsNotActiveException:
             raise APIException(
                 _lazy("You can not update already canceled or closed event")
             )
@@ -89,7 +89,7 @@ class EventView(GenericViewSet, generics.RetrieveAPIView, generics.ListAPIView):
             raise APIException(
                 _lazy("You have to be a creator to add new participants to the event")
             )
-        except EventIsNotOpenedException:
+        except EventIsNotActiveException:
             raise APIException(
                 _lazy(
                     "You can not add participants to the already canceled or closed event"
@@ -116,7 +116,7 @@ class EventView(GenericViewSet, generics.RetrieveAPIView, generics.ListAPIView):
             raise APIException(
                 _lazy("You have to be a creator to remove participants from the event")
             )
-        except EventIsNotOpenedException:
+        except EventIsNotActiveException:
             raise APIException(
                 _lazy(
                     "You can not remove participants from the already complete or closed event"
