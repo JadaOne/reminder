@@ -33,5 +33,5 @@ services:
   worker:
     <<: *reminder_container
     ports: []
-    command: python manage.py rqworker default
+    command: python manage.py run_scheduled_tasks
     container_name: reminder-worker-dev
